@@ -5,6 +5,8 @@ import Experience from './Experience';
 import Education from './Education';
 import Language from './Language';
 import Skills from './Skills';
+import Profile from './Profile';
+import Interest from './interest';
 
 const Contents = () => {  
 
@@ -13,10 +15,12 @@ const Contents = () => {
     <Header  name="Contents" />
 
     <Container className="mt-5">
+      <Profile />
       <Experience />
       <Education />
       <Skills />
       <Language />
+      <Interest />
     </Container>
 
     </>
