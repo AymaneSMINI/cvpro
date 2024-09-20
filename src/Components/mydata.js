@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Card from 'react-bootstrap/Card';
 import Button from 'react-bootstrap/Button';
 import Col from 'react-bootstrap/Col';
@@ -9,13 +9,31 @@ import PhoneInput from 'react-phone-number-input';
 import Header from './HeaderIcons';
 import PageNextIcon from '@rsuite/icons/PageNext';
 import styles from './styles.module.css';
+import Cookies from 'js-cookie'; // Import js-cookie
 
 const Mydata = () => {
   const [validated, setValidated] = useState(false);
-  const [phone, setPhone] = useState(); // For phone number input
-  const [fullName, setFullName] = useState('');
-  const [email, setEmail] = useState('');
-  const [address, setAddress] = useState('');
+  const [phone, setPhone] = useState(Cookies.get('phone') || ''); // Retrieve initial value from cookies if available
+  const [fullName, setFullName] = useState(Cookies.get('fullName') || '');
+  const [email, setEmail] = useState(Cookies.get('email') || '');
+  const [address, setAddress] = useState(Cookies.get('address') || '');
+
+  // Use useEffect to update cookies when form values change
+  useEffect(() => {
+    Cookies.set('fullName', fullName, { expires: 7 });
+  }, [fullName]);
+
+  useEffect(() => {
+    Cookies.set('email', email, { expires: 7 });
+  }, [email]);
+
+  useEffect(() => {
+    Cookies.set('phone', phone, { expires: 7 });
+  }, [phone]);
+
+  useEffect(() => {
+    Cookies.set('address', address, { expires: 7 });
+  }, [address]);
 
   const handleSubmit = (event) => {
     const form = event.currentTarget;
@@ -88,10 +106,10 @@ const Mydata = () => {
                     />
                   </Form.Group>
                 </Row>
-                <Row className="text-center">
+                <Row class="text-center">
                   <Button
                     href="/contents"
-                    className="btn btn-outline-primary w-50 text-decoration-none"
+                    className="btn text-decoration-none"
                     type="submit"
                   >
                     Next <PageNextIcon />

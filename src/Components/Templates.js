@@ -6,6 +6,12 @@ import html2pdf from 'html2pdf.js';
 
 
 const CVDisplay = () => {
+   //extract personal data
+   const addressString = Cookies.get('address');
+   const emailString = Cookies.get('email');
+   const nameString = Cookies.get('fullName');
+   const phoneString = Cookies.get('phone');
+     
   // Extract formData from cookies
   const formDataString = Cookies.get('formData');
   const formData = formDataString ? JSON.parse(formDataString) : {};
@@ -13,11 +19,11 @@ const CVDisplay = () => {
   
   // Dynamically populate the CV data with formData or default values
   const [cvData] = useState({
-    name: formData.name || 'First Last Name',
+    name: nameString || 'First Last Name',
     contact: {
-      email: formData.contact?.email || 'email@gmail.com',
-      phone: formData.contact?.phone || '(999) 999-9999',
-      location: formData.contact?.location || 'City, State',
+      email: emailString || 'email@gmail.com',
+      phone: phoneString || '(999) 999-9999',
+      location: addressString || 'City, State',
     },
     experience: formData.experience || [
       {
