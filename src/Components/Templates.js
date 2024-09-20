@@ -1,120 +1,155 @@
 import React, { useState } from 'react';
-import { Container,  Card, ListGroup } from 'react-bootstrap';
+import { Button, Container } from 'react-bootstrap';
+import Cookies from 'js-cookie';
+import Header from './HeaderIcons';
+import html2pdf from 'html2pdf.js';
+
 
 const CVDisplay = () => {
-  // State containing dynamic CV data
+  // Extract formData from cookies
+  const formDataString = Cookies.get('formData');
+  const formData = formDataString ? JSON.parse(formDataString) : {};
+  console.log(formData);
+  
+  // Dynamically populate the CV data with formData or default values
   const [cvData] = useState({
-    name: 'First Last Name',
+    name: formData.name || 'First Last Name',
     contact: {
-      email: 'email@gmail.com',
-      phone: '(999) 999-9999',
-      location: 'City, State',
+      email: formData.contact?.email || 'email@gmail.com',
+      phone: formData.contact?.phone || '(999) 999-9999',
+      location: formData.contact?.location || 'City, State',
     },
-    experience: [
+    experience: formData.experience || [
       {
-        title: 'Reporter',
-        company: 'Hendersonville Times-News',
-        location: 'City, NC',
-        startDate: 'Dec 2015',
-        endDate: 'Present',
-        description: [
+        first: 'Reporter',
+        Second: 'Hendersonville Times-News',
+        third: 'City, NC',
+        fourth: 'Dec 2015',
+        fifth: 'Present',
+        sixth: [
           'Write four to seven stories each week under a tight deadline.',
-          'Develop, edit, and post content to web, Facebook, and Twitter.',
-          'Analyze website traffic and target audience data to produce compelling stories.',
-        ],
-      },
-      {
-        title: 'Reporter',
-        company: 'Mitchell News-Journal',
-        location: 'Small town, NC',
-        startDate: 'Aug 2013',
-        endDate: 'Dec 2015',
-        description: [
-          'Created all written content and photos for the front page of the weekly newspaper.',
-          'Produced three to five general news articles each week.',
-        ],
+         ],
       },
     ],
-    education: [
+    education: formData.education || [
       {
-        degree: 'Bachelor of Arts, Mass Communication',
-        university: 'State University',
-        date: 'May 2013',
-        location: 'Hometown, NC',
+        first: 'Bachelor of Arts, Mass Communication',
+        Second: 'State University',
+        third: 'May 2013',
+        fourth: 'Hometown, NC',
+        fifth: 'Hometown, NC',
+        sixth: 'Hometown, NC',
       },
     ],
-    skills: ['Microsoft Office', 'Adobe Photoshop', 'WordPress', 'AP Style'],
+    skills: formData.skills || [{
+      FirInput :'Microsoft Office',
+      dropdown : "very good"
+    }],
+    interest: formData.interest || [{
+      FirInput :'Microsoft Office',
+    }],
+    language: formData.language || [{
+      FirInput :'Microsoft Office',
+      dropdown : "very good"
+    }],
   });
 
+  const downloadPDF = () => {
+    const element = document.getElementById('cv-container'); // The container with the CV content
+    
+    const opt = {
+      margin: 0.5,
+      filename: 'cv.pdf',
+      image: { type: 'jpeg', quality: 0.98 },
+      html2canvas: { scale: 2 },
+      jsPDF: { unit: 'in', format: 'letter', orientation: 'portrait' },
+    };
+  
+    html2pdf().from(element).set(opt).save();
+  };
   return (
-    <Container>
-      {/* Name and Contact Information */}
-      <Card className="mb-4">
-        <Card.Body>
-          <Card.Title as="h1">{cvData.name}</Card.Title>
-          <Card.Text>
-            <strong>Email:</strong> {cvData.contact.email}
-          </Card.Text>
-          <Card.Text>
-            <strong>Phone:</strong> {cvData.contact.phone}
-          </Card.Text>
-          <Card.Text>
-            <strong>Location:</strong> {cvData.contact.location}
-          </Card.Text>
-        </Card.Body>
-      </Card>
+    <>
+      <Header name="Templates" />
+    
+      <Container id="cv-container" style={{padding: '20px', marginBottom: "50px" }}>
+        {/* Name and Contact Information */}
+        <div style={{ textAlign: 'center', marginBottom: '20px' }}>
+          <h1 style={{ fontWeight: 'normal' }}>{cvData.name}</h1>
+          <p>
+            {cvData.contact.email} - {cvData.contact.phone} - {cvData.contact.location}
+          </p>
+        </div>
 
-      {/* Experience Section */}
-      <Card className="mb-4">
-        <Card.Header as="h4">Experience</Card.Header>
-        <Card.Body>
+        {/* Experience Section */}
+        <div style={{ marginBottom: '20px' }}>
+          <h4 style={{ textDecoration: 'underline' }}>Experience</h4>
           {cvData.experience.map((exp, index) => (
-            <div key={index} className="mb-3">
-              <h5>{exp.title}</h5>
+            <div key={index} style={{ marginBottom: '10px' }}>
+              <h6>{exp.first}</h6>
               <p>
-                <strong>{exp.company}</strong> - {exp.location}
-              </p>
-              <p>
-                {exp.startDate} - {exp.endDate}
+                {exp.third} - {exp.Second} 
+                <span style={{"float":"right"}}>{exp.fourth} - {exp.fifth}</span>
               </p>
               <ul>
-                {exp.description.map((item, idx) => (
-                  <li key={idx}>{item}</li>
-                ))}
+                {exp.sixth }
               </ul>
             </div>
           ))}
-        </Card.Body>
-      </Card>
+        </div>
 
-      {/* Education Section */}
-      <Card className="mb-4">
-        <Card.Header as="h4">Education</Card.Header>
-        <Card.Body>
+        {/* Education Section */}
+        <div style={{ marginBottom: '20px' }}>
+          <h4 style={{ textDecoration: 'underline' }}>Education</h4>
           {cvData.education.map((edu, index) => (
-            <div key={index} className="mb-3">
-              <h5>{edu.degree}</h5>
+            <div key={index} style={{ marginBottom: '10px' }}>
+              <h6>{edu.first}</h6>
               <p>
-                <strong>{edu.university}</strong> - {edu.location}
+              {edu.third} - {edu.Second}<span style={{"float":"right"}}>{edu.fourth} - {edu.fifth}</span>
               </p>
-              <p>{edu.date}</p>
+              <p>
+                
+              </p>
             </div>
           ))}
-        </Card.Body>
-      </Card>
+        </div>
 
-      {/* Skills Section */}
-      <Card className="mb-4">
-        <Card.Header as="h4">Skills</Card.Header>
-        <Card.Body>
-          <ListGroup>
-            {cvData.skills.map((skill, index) => (
-              <ListGroup.Item key={index}>{skill}</ListGroup.Item>
+        {/* Language Section */}
+        <div style={{ marginBottom: '20px' }}>
+          <h4 style={{ textDecoration: 'underline' }}>Languages</h4>
+          <ul>
+            {cvData.language.map((language, index) => (
+              <li key={index}>{language.FirInput} &nbsp;&nbsp; <b>{language.dropdown}</b> </li>
             ))}
-          </ListGroup>
-        </Card.Body>
-      </Card>
-    </Container>
+          </ul>
+        </div>
+        {/* Skills Section */}
+        <div style={{ marginBottom: '20px' }}>
+          <h4 style={{ textDecoration: 'underline' }}>Skills</h4>
+          <ul>
+            {cvData.skills.map((skill, index) => (
+              <li key={index}>{skill.FirInput} &nbsp;&nbsp; <b>{skill.dropdown}</b> </li>
+            ))}
+          </ul>
+        </div>
+        {/* interest Section */}
+        <div style={{ marginBottom: '20px' }}>
+          <h4 style={{ textDecoration: 'underline' }}>interests</h4>
+          <ul>
+            {cvData.interest.map((interest, index) => (
+              <li key={index}>{interest.FirInput}</li>
+            ))}
+          </ul>
+        </div>
+
+
+      </Container>
+      <div class="text-center">
+      <button onClick={downloadPDF} class="btn btn-primary" style={{marginBottom: "30px"}}>Download CV as PDF</button>
+      </div>
+      <div class="text-center" style={{marginBottom:"30px"}}>
+        <Button href='/contents' variant="outline-secondary" type="submit">back</Button>
+      </div>
+    </>
   );
 };
 

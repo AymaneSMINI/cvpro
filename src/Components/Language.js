@@ -1,13 +1,13 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import DynamicForm2 from './DynamicForm2.js';
 import Card from 'react-bootstrap/Card';
 import { Button, ListGroup, Container, Form } from 'react-bootstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEdit, faTrashAlt, faPlus, faCog } from '@fortawesome/free-solid-svg-icons';
 
-const Language = () => {
+const Language = ({onSave, initialLanguageData = [] }) => {
   
-    const [formsLangauge, setFormsLangauge] = useState([]);
+    const [formsLangauge, setFormsLanguage] = useState([]);
     const [editingIndexLangauge, setEditingIndexLangauge] = useState(null);
 
     // Editable headers for each section
@@ -27,24 +27,30 @@ const Language = () => {
         SecondPlaceholder: "Select",
     };
     
-    // Add form functions for Langauge and Education
+    // Add form functions for Langauge and Language
     const addFormLangauge = () => {
       setEditingIndexLangauge(formsLangauge.length);
-      setFormsLangauge([...formsLangauge, { FirInput: '', dropdown: '' }]);
+      setFormsLanguage([...formsLangauge, { FirInput: '', dropdown: '' }]);
     };
   
     // Save form data functions
     const saveFormLangauge = (index, formData) => {
       const updatedForms = formsLangauge.map((form, i) => (i === index ? formData : form));
-      setFormsLangauge(updatedForms);
+      setFormsLanguage(updatedForms);
       setEditingIndexLangauge(null);
+      onSave(updatedForms); 
     };
-  
+    
+    useEffect(() => {
+      if (initialLanguageData.length > 0) {
+        setFormsLanguage(initialLanguageData);  // Set initial data from props
+      }
+    }, [initialLanguageData]); 
     // Edit form functions
     const editFormLangauge = (index) => setEditingIndexLangauge(index);
   
     // Remove form functions
-    const removeFormLangauge = (index) => setFormsLangauge(formsLangauge.filter((_, i) => i !== index));
+    const removeFormLangauge = (index) => setFormsLanguage(formsLangauge.filter((_, i) => i !== index));
   
     // Toggle header edit functions
     const toggleHeaderEditLangauge = () => setIsEditingHeaderLangauge(!isEditingHeaderLangauge);

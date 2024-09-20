@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Button, ListGroup, Container, Form } from 'react-bootstrap';
 import DynamicForm from './DynamicForm';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -6,7 +6,7 @@ import { faEdit, faTrashAlt, faPlus, faCog } from '@fortawesome/free-solid-svg-i
 import Card from 'react-bootstrap/Card';
 
 
-const Education = () => {
+const Education = ({onSave, initialEducationData = [] }) => {
 
     // State for Education forms
     const [formsEducation, setFormsEducation] = useState([]);
@@ -38,11 +38,17 @@ const Education = () => {
         sixthPlaceholder: ""
       };
     
+      useEffect(() => {
+        if (initialEducationData.length > 0) {
+          setFormsEducation(initialEducationData);  // Set initial data from props
+        }
+      }, [initialEducationData]); 
+      
     // Add form functions for Education
 
     const addFormEducation = () => {
       setEditingIndexEducation(formsEducation.length);
-      setFormsEducation([...formsEducation, { value: '', description: '', fullDate: '', monthYear: '', additionalField: '' }]);
+      setFormsEducation([...formsEducation, { first: '',second: '',third: '',fourth: '',fifth: '',sixth: '' }]);
     };
   
     // Save form data functions
@@ -51,6 +57,7 @@ const Education = () => {
       const updatedForms = formsEducation.map((form, i) => (i === index ? formData : form));
       setFormsEducation(updatedForms);
       setEditingIndexEducation(null);
+      onSave(updatedForms); 
     };
   
     // Edit form functions
@@ -101,8 +108,8 @@ const Education = () => {
                   ) : (
                     <div className="d-flex justify-content-between align-items-center">
                       <div className="d-flex flex-column">
-                                      <h6>{form.value || 'Education'}</h6>
-                                      <p>{form.fullDate || 'Septembre 2024'} - {form.untildate || 'Septembre 2024'}</p>
+                                      <h6>{form.first || 'Education'}</h6>
+                                      <p>{form.fourth || 'Septembre 2024'} - {form.fifth || 'Septembre 2024'}</p>
                       </div>
                       <div>
                         <Button variant="light" onClick={() => editFormEducation(index)} className="me-2">

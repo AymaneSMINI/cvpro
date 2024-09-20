@@ -1,22 +1,33 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { FaCog } from 'react-icons/fa'; // For the settings icon
 
-const Profile = () => {
-  const [headerText, setHeaderText] = useState('Profile Header');
+const Profile = ({ onSave, initialProfileData = {} }) => {
+  // Initialize state with the passed initial data or defaults
+  const [headerText, setHeaderText] = useState(initialProfileData.headerText || 'Profile Header');
   const [isEditing, setIsEditing] = useState(false);
-  const [textValue, setTextValue] = useState('');
+  const [textValue, setTextValue] = useState(initialProfileData.description || '');
+
+  // Update the state when the initialProfileData changes
+  useEffect(() => {
+    if (initialProfileData) {
+      setHeaderText(initialProfileData.headerText || 'Profile Header');
+      setTextValue(initialProfileData.description || '');
+    }
+  }, [initialProfileData]);
 
   const handleSave = (e) => {
     e.preventDefault();
-    console.log('Saved Description:', textValue);
-    // Handle the save logic (e.g., sending the description to an API or saving locally)
+    // Trigger the onSave function passed from the parent with the updated profile data
+    onSave({
+      headerText,
+      description: textValue,
+    });
   };
 
   const toggleEdit = () => {
     setIsEditing(!isEditing);
   };
-
 
   return (
     <div className="container mt-4">

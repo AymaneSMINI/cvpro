@@ -1,11 +1,11 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import Card from 'react-bootstrap/Card';
 import { Button, ListGroup, Container, Form } from 'react-bootstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEdit, faTrashAlt, faPlus, faCog } from '@fortawesome/free-solid-svg-icons';
 import DynamicForm3 from './DynamicForm3.js';
 
-const Interest = () => {
+const Interest = ({onSave, initialInterestData = [] }) => {
   
     const [formsInterest, setFormsInterest] = useState([]);
     const [editingIndexInterest, setEditingIndexInterest] = useState(null);
@@ -24,8 +24,12 @@ const Interest = () => {
     const placeholdersInterest = {
         FirstPlaceholder: "",
     };
-    
-    // Add form functions for Interest and Education
+    useEffect(() => {
+      if (initialInterestData.length > 0) {
+        setFormsInterest(initialInterestData);  // Set initial data from props
+      }
+    }, [initialInterestData]); 
+    // Add form functions for Interest and 
     const addFormInterest = () => {
       setEditingIndexInterest(formsInterest.length);
       setFormsInterest([...formsInterest, { FirInput: '' }]);
@@ -36,6 +40,7 @@ const Interest = () => {
       const updatedForms = formsInterest.map((form, i) => (i === index ? formData : form));
       setFormsInterest(updatedForms);
       setEditingIndexInterest(null);
+      onSave(updatedForms); 
     };
   
     // Edit form functions

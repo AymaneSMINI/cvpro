@@ -1,11 +1,11 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import DynamicForm2 from './DynamicForm2.js';
 import Card from 'react-bootstrap/Card';
 import { Button, ListGroup, Container, Form } from 'react-bootstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEdit, faTrashAlt, faPlus, faCog } from '@fortawesome/free-solid-svg-icons';
 
-const Skills = () => {
+const Skills = ({onSave, initialSkillData = [] }) => {
   
     const [formsSkills, setFormsSkills] = useState([]);
     const [editingIndexSkills, setEditingIndexSkills] = useState(null);
@@ -26,7 +26,11 @@ const Skills = () => {
         FirstPlaceholder: "ex. Microsoft Word",
         SecondPlaceholder: "Select",
     };
-    
+    useEffect(() => {
+      if (initialSkillData.length > 0) {
+        setFormsSkills(initialSkillData);  // Set initial data from props
+      }
+    }, [initialSkillData]); 
     // Add form functions for Skills and Education
     const addFormSkills = () => {
       setEditingIndexSkills(formsSkills.length);
@@ -38,6 +42,7 @@ const Skills = () => {
       const updatedForms = formsSkills.map((form, i) => (i === index ? formData : form));
       setFormsSkills(updatedForms);
       setEditingIndexSkills(null);
+      onSave(updatedForms); 
     };
   
     // Edit form functions

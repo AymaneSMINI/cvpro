@@ -24,9 +24,9 @@ const DynamicForm = ({ onSave, index, form, labels, placeholders }) => {
             <Form.Label>{labels.mainLabel}</Form.Label>
             <Form.Control
               type="text"
-              name="value"
+              name="first"
               placeholder={placeholders.FirstPlaceholder}
-              value={fields.value}
+              value={fields.first}
               onChange={handleInputChange}
             />
           </Form.Group>
@@ -37,9 +37,9 @@ const DynamicForm = ({ onSave, index, form, labels, placeholders }) => {
             <Form.Label>{labels.descriptionLabel}</Form.Label>
             <Form.Control
               type="text"
-              name="description"
+              name="Second"
               placeholder={placeholders.SecondPlaceholder}
-              value={fields.description || ''}
+              value={fields.Second || ''}
               onChange={handleInputChange}
             />
           </Form.Group>
@@ -53,9 +53,9 @@ const DynamicForm = ({ onSave, index, form, labels, placeholders }) => {
             <Form.Label>{labels.Employer}</Form.Label>
             <Form.Control
               type="text"
-              name="Employer"
+              name="third"
               placeholder={placeholders.ThirdPlaceholder}
-              value={fields.Employer || ''}
+              value={fields.third || ''}
               onChange={handleInputChange}
             />
           </Form.Group>
@@ -69,9 +69,9 @@ const DynamicForm = ({ onSave, index, form, labels, placeholders }) => {
             <Form.Label>{labels.dateLabel}</Form.Label>
             <Form.Control
               type="date"
-              name="fullDate"
+              name="fourth"
               placeholder={placeholders.FourthPlaceholder}
-              value={fields.fullDate || ''}
+              value={fields.fourth || ''}
               onChange={handleInputChange}
             />
           </Form.Group>
@@ -81,9 +81,9 @@ const DynamicForm = ({ onSave, index, form, labels, placeholders }) => {
             <Form.Label>{labels.monthYearLabel}</Form.Label>
             <Form.Control
               type="date"
-              name="untildate"
+              name="fifth"
               placeholder={placeholders.fifthPlaceholder}
-              value={fields.untildate || ''}
+              value={fields.fifth || ''}
               onChange={handleInputChange}
             />
           </Form.Group>
@@ -97,9 +97,9 @@ const DynamicForm = ({ onSave, index, form, labels, placeholders }) => {
             <Form.Label>{labels.additionalFieldLabel}</Form.Label>
             <Form.Control
               type="text"
-              name="additionalField"
+              name="sixth"
               placeholder={placeholders.sixthPlaceholder}
-              value={fields.additionalField || ''}
+              value={fields.sixth || ''}
               onChange={handleInputChange}
             />
           </Form.Group>
